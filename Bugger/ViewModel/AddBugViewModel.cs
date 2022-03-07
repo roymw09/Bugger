@@ -13,7 +13,21 @@ namespace Bugger.ViewModel
 
         public int BugID => _bug.BugID;
         public string Assignee => _bug.Assignee;
-        public string Status => _bug.Status;
+
+        private string status;
+        public string Status
+        {
+            get
+            {
+                return status;
+            }
+            set
+            {
+                status = value;
+                onPropertyChanged(nameof(Status));
+            }
+        }
+
         private string description;
         public string Description
         {

@@ -23,6 +23,10 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0, 30, 0, 0">
+            <TextBox Width="50" Height="auto" Text="{Binding Status, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        
         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,30,0,0">
             <TextBox Width="50" Height="auto" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="5,0,0,0" Content="Submit" Command="{Binding AddBugCommand}"/>
