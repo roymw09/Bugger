@@ -26,7 +26,7 @@ namespace Bugger.Command
 
         public override void Execute(object parameter)
         {
-            Bug bug = new Bug(1, "Roy", _addBugViewModel.Status, _addBugViewModel.Description, "2022-03-01");
+            Bug bug = new Bug(1, _addBugViewModel.Assignee, _addBugViewModel.Status, _addBugViewModel.Description, _addBugViewModel.FixDescription, _addBugViewModel.DateClosed, _addBugViewModel.DateClosed);
             _bugs.AddBug(bug);
             _addBugViewNavigationService.Navigate();
         }

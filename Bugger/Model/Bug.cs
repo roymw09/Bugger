@@ -10,13 +10,15 @@
         public  string DateRaised { get; }
         public string DateClosed { get; }
 
-        public Bug(int bugId, string assignee, string status, string description, string dateRaised)
+        public Bug(int bugId, string assignee, string status, string description, string fixDescription, string dateRaised, string dateClosed)
         {
             BugID = bugId;
             Assignee = assignee;
             Status = status;
             Description = description;
+            FixDescription = fixDescription;
             DateRaised = dateRaised;
+            DateClosed = dateClosed;
         }
     }
 }

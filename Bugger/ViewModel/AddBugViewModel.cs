@@ -12,7 +12,20 @@ namespace Bugger.ViewModel
         private readonly Bug _bug;
 
         public int BugID => _bug.BugID;
-        public string Assignee => _bug.Assignee;
+
+        private string assignee;
+        public string Assignee
+        {
+            get
+            {
+                return assignee;
+            }
+            set
+            {
+                assignee = value;
+                onPropertyChanged(nameof(Assignee));
+            }
+        }
 
         private string status;
         public string Status
@@ -39,6 +52,48 @@ namespace Bugger.ViewModel
             {
                 description = value;
                 onPropertyChanged(nameof(Description));
+            }
+        }
+
+        private string fixDescription;
+        public String FixDescription
+        {
+            get
+            {
+                return fixDescription;
+            }
+            set
+            {
+                fixDescription = value;
+                onPropertyChanged(nameof(FixDescription));
+            }
+        }
+
+        private string dateRaised;
+        public String DateRaised
+        {
+            get
+            {
+                return dateRaised;
+            }
+            set
+            {
+                dateRaised = value;
+                onPropertyChanged(nameof(DateRaised));
+            }
+        }
+
+        private string dateClosed;
+        public String DateClosed
+        {
+            get
+            {
+                return dateClosed;
+            }
+            set
+            {
+                dateClosed = value;
+                onPropertyChanged(nameof(DateClosed));
             }
         }
 
