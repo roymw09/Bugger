@@ -32,7 +32,7 @@
         <ListView Height="auto" Grid.Row="1" Margin="0 25 0 0" ItemsSource="{Binding Bugs}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 </Style>
             </ListView.ItemContainerStyle>
             
