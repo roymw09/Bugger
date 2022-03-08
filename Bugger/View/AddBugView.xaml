@@ -23,24 +23,35 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Vertical" Margin="0, 30, 0, 0">
-            <TextBox Margin="5,5,0,0" Width="100" Height="auto" Text="{Binding Assignee, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Margin="5,5,0,0" Width="100" Height="auto" Text="{Binding Status, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 0">
+            <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Vertical" Margin="0 0 30 0">
+                <TextBlock Margin="5 5 0 0" Text="Assigned to" />
+                <TextBox Margin="5 5 0 0" Width="100" Height="auto" Text="{Binding Assignee, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <TextBlock Margin="5 5 0 0" Text="Status" />
+                <TextBox Margin="5 5 0 0" Width="100" Height="auto" Text="{Binding Status, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Grid.Row="3" Orientation="Vertical" Margin="0 0 0 0">
+                <TextBlock Margin="5 5 0 0" Text="Date raised" />
+                <TextBox Margin="5 5 0 0" Width="100" Height="auto" Text="{Binding DateRaised, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Margin="5 5 0 0" Text="Date closed" />
+                <TextBox Margin="5 5 0 0" Width="100" Height="auto" Text="{Binding DateClosed, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Vertical" Margin="0, 30, 0, 0">
-            <TextBox Margin="5,5,0,0" Width="200" Height="50" TextWrapping="Wrap" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Margin="5,5,0,0" Width="200" Height="50" TextWrapping="Wrap" Text="{Binding FixDescription, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Vertical" Margin="0 30 0 0">
+            <TextBlock Margin="5 5 0 0" Text="Description" />
+            <TextBox Margin="5 5 0 0" Width="200" Height="auto" TextWrapping="Wrap" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Margin="5 5 0 0" Text="Fix description" />
+            <TextBox Margin="5 5 0 0" Width="200" Height="auto" TextWrapping="Wrap" Text="{Binding FixDescription, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Center" Grid.Row="3" Orientation="Horizontal" Margin="0, 30, 0, 0">
-            <TextBox Margin="5,0,0,0" Width="75" Height="auto" Text="{Binding DateRaised, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Margin="5,0,0,0" Width="75" Height="auto" Text="{Binding DateClosed, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
-
-        <StackPanel HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal" Margin="0,30,0,0">
-            <Button Margin="5,0,0,0" Content="Submit" Command="{Binding AddBugCommand}"/>
-            <Button Margin="5,0,0,0" Content="Cancel" Command="{Binding CancelAddBugCommand}"/>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal" Margin="0 30 0 0">
+            <Button Margin="5 0 0 0" Content="Submit" Command="{Binding AddBugCommand}"/>
+            <Button Margin="5 0 0 0" Content="Cancel" Command="{Binding CancelAddBugCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -21,7 +21,7 @@ namespace Bugger
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateBugListViewModel();
+            _navigationStore.CurrentViewModel = CreateLoginViewModel();
 
             MainWindow = new MainWindow()
             {
@@ -40,6 +40,11 @@ namespace Bugger
         private BugListViewModel CreateBugListViewModel()
         {
             return new BugListViewModel(_bugs, new NavigationService(_navigationStore, CreateAddBugViewModel));
+        }
+
+        private LoginViewModel CreateLoginViewModel()
+        {
+            return new LoginViewModel(new NavigationService(_navigationStore, CreateBugListViewModel));
         }
     }
 }
