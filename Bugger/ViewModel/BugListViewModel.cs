@@ -15,22 +15,29 @@ namespace Bugger.ViewModel
         private readonly ObservableCollection<BugViewModel> _bugs;
         public IEnumerable<BugViewModel> Bugs => _bugs;
 
+        public ICommand LoadBugCommand { get; }
         public ICommand CreateBugCommand { get; }
 
         public BugListViewModel(BugList bugList, NavigationService addBugViewNavigationService)
         {
-            this.bugList = bugList;
             _bugs = new ObservableCollection<BugViewModel>();
 
+            LoadBugCommand = new LoadBugCommand(this, bugList);
             CreateBugCommand = new NavigateCommand(addBugViewNavigationService);
-
-            UpdateBugList();
         }
 
-        private void UpdateBugList()
+        public static BugListViewModel LoadViewModel(BugList bugList, NavigationService addBugViewNavigationService)
+        {
+            BugListViewModel viewModel = new BugListViewModel(bugList, addBugViewNavigationService);
+
+            viewModel.LoadBugCommand.Execute(null);
+            return viewModel;
+        }
+
+        public void UpdateBugList(IEnumerable<Bug> bugs)
         {
             _bugs.Clear();
-            foreach (var bug in bugList.GetBugList())
+            foreach (Bug bug in bugs)
             {
                 BugViewModel bugViewModel = new BugViewModel(bug);
                 _bugs.Add(bugViewModel);

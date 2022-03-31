@@ -11,7 +11,7 @@ namespace Bugger.ViewModel
     {
         private readonly Bug _bug;
 
-        public int BugID => _bug.BugID;
+        public string BugID => _bug.BugID;
 
         private string assignee;
         public string Assignee

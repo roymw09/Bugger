@@ -1,5 +1,8 @@
-﻿using Bugger.Model;
+﻿using Bugger.DBContext;
+using Bugger.Model;
 using Bugger.Service;
+using Bugger.Service.BugCreator;
+using Bugger.Service.BugProvider;
 using Bugger.Store;
 using Bugger.ViewModel;
 using System;
@@ -14,9 +17,13 @@ namespace Bugger
     {
         private readonly BugList _bugs;
         private readonly NavigationStore _navigationStore;
+        
         public App()
         {
-            _bugs = new BugList();
+            BugDbContextFactory bugDbContextFactory = new BugDbContextFactory("test"); // needs connection string
+            IBugProvider bugProvider = new DatabaseBugProvider(bugDbContextFactory);
+            IBugCreator bugCreator = new DatabaseBugCreator(bugDbContextFactory);
+            _bugs = new BugList(bugProvider, bugCreator);
             _navigationStore = new NavigationStore();
         }
         protected override void OnStartup(StartupEventArgs e)
@@ -39,7 +46,7 @@ namespace Bugger
 
         private BugListViewModel CreateBugListViewModel()
         {
-            return new BugListViewModel(_bugs, new NavigationService(_navigationStore, CreateAddBugViewModel));
+            return BugListViewModel.LoadViewModel(_bugs, new NavigationService(_navigationStore, CreateAddBugViewModel));
         }
 
         private LoginViewModel CreateLoginViewModel()

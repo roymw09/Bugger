@@ -5,7 +5,7 @@ namespace Bugger.ViewModel
     public class BugViewModel : ViewModelBase
     {
         private readonly Bug _bug;
-        public int BugID => _bug.BugID;
+        public string BugID => _bug.BugID;
         public string Assignee => _bug.Assignee;
         public string Status => _bug.Status;
         public string Description => _bug.Description;

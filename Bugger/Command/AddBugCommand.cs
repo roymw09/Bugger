@@ -2,10 +2,11 @@
 using Bugger.Service;
 using Bugger.ViewModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Bugger.Command
 {
-    public class AddBugCommand : CommandBase
+    public class AddBugCommand : AsyncCommandBase
     {
         private readonly AddBugViewModel _addBugViewModel;
         private readonly BugList _bugs;
@@ -24,10 +25,10 @@ namespace Bugger.Command
             return !string.IsNullOrEmpty(_addBugViewModel.Description) && base.CanExecute(parameter);
         }
 
-        public override void Execute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
-            Bug bug = new Bug(1, _addBugViewModel.Assignee, _addBugViewModel.Status, _addBugViewModel.Description, _addBugViewModel.FixDescription, _addBugViewModel.DateClosed, _addBugViewModel.DateClosed);
-            _bugs.AddBug(bug);
+            Bug bug = new Bug("1", _addBugViewModel.Assignee, _addBugViewModel.Status, _addBugViewModel.Description, _addBugViewModel.FixDescription, _addBugViewModel.DateClosed, _addBugViewModel.DateClosed);
+            await _bugs.AddBug(bug);
             _addBugViewNavigationService.Navigate();
         }
 
