@@ -2,7 +2,7 @@
 {
     public class Bug
     {
-        public int BugID { get; }
+        public string BugID { get; }
         public string Assignee { get; }
         public string Status { get; }
         public string Description { get; }
@@ -10,7 +10,7 @@
         public  string DateRaised { get; }
         public string DateClosed { get; }
 
-        public Bug(int bugId, string assignee, string status, string description, string fixDescription, string dateRaised, string dateClosed)
+        public Bug(string bugId, string assignee, string status, string description, string fixDescription, string dateRaised, string dateClosed)
         {
             BugID = bugId;
             Assignee = assignee;

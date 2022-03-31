@@ -1,26 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using Bugger.Service.BugCreator;
+using Bugger.Service.BugProvider;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace Bugger.Model
 {
     public class BugList
     {
+        private readonly IBugProvider _bugProvider;
+        private readonly IBugCreator _bugCreator;
         private readonly ObservableCollection<Bug> _bugsObservable;
         public ObservableCollection<Bug> BugsObservable => _bugsObservable;
 
-        public BugList()
+        public BugList(IBugProvider bugProvider, IBugCreator bugCreator)
         {
-            _bugsObservable = new ObservableCollection<Bug>();
+            _bugProvider = bugProvider;
+            _bugCreator = bugCreator;
         }
 
-        public void AddBug(Bug bug)
+        public async Task<IEnumerable<Bug>> GetBugList()
         {
-            _bugsObservable.Add(bug);
+            return await _bugProvider.getAllBugs();
         }
 
-        public ObservableCollection<Bug> GetBugList()
+        public async Task AddBug(Bug bug)
         {
-            return _bugsObservable;
+            await _bugCreator.CreateBug(bug);
         }
     }
 }
