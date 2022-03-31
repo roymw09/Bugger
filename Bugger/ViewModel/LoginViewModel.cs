@@ -1,4 +1,5 @@
 ﻿using Bugger.Command;
+using Bugger.Model;
 using Bugger.Service;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Bugger.ViewModel
         }
 
         private string databaseName;
-        public String DatabaseName
+        public string DatabaseName
         {
             get
             {
@@ -40,7 +41,7 @@ namespace Bugger.ViewModel
         }
 
         private string username;
-        public String Username
+        public string Username
         {
             get
             {
@@ -54,7 +55,7 @@ namespace Bugger.ViewModel
         }
 
         private string password;
-        public String Password
+        public string Password
         {
             get
             {

@@ -11,7 +11,6 @@ namespace Bugger.ViewModel
 {
     public class BugListViewModel : ViewModelBase
     {
-        private BugList bugList;
         private readonly ObservableCollection<BugViewModel> _bugs;
         public IEnumerable<BugViewModel> Bugs => _bugs;
 

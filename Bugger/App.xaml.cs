@@ -16,11 +16,10 @@ namespace Bugger
     public partial class App : Application
     {
         private readonly BugList _bugs;
-        private readonly NavigationStore _navigationStore;
-        
+        private readonly NavigationStore _navigationStore;        
         public App()
         {
-            BugDbContextFactory bugDbContextFactory = new BugDbContextFactory("test"); // needs connection string
+            BugDbContextFactory bugDbContextFactory = new BugDbContextFactory("server=localhost;database=issue_track;username=root;password=password"); // needs connection string
             IBugProvider bugProvider = new DatabaseBugProvider(bugDbContextFactory);
             IBugCreator bugCreator = new DatabaseBugCreator(bugDbContextFactory);
             _bugs = new BugList(bugProvider, bugCreator);

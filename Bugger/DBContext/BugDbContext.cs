@@ -10,9 +10,8 @@ namespace Bugger.DBContext
 {
     public class BugDbContext : DbContext
     {
-        public BugDbContext(DbContextOptions options)
+        public BugDbContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<BugDTO> Bugs { get; set; }

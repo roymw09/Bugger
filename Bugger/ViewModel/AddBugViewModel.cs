@@ -56,7 +56,7 @@ namespace Bugger.ViewModel
         }
 
         private string fixDescription;
-        public String FixDescription
+        public string FixDescription
         {
             get
             {
@@ -70,7 +70,7 @@ namespace Bugger.ViewModel
         }
 
         private string dateRaised;
-        public String DateRaised
+        public string DateRaised
         {
             get
             {
@@ -84,7 +84,7 @@ namespace Bugger.ViewModel
         }
 
         private string dateClosed;
-        public String DateClosed
+        public string DateClosed
         {
             get
             {
