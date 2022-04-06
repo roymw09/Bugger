@@ -16,14 +16,14 @@ namespace Bugger
     public partial class App : Application
     {
         private readonly BugList _bugs;
-        private readonly NavigationStore _navigationStore;        
+        private readonly NavigationStore _navigationStore;
+        private readonly LoginViewModel _loginViewModel;
+        private BugListViewModel bugListViewModel;
         public App()
         {
-            BugDbContextFactory bugDbContextFactory = new BugDbContextFactory("server=localhost;database=issue_track;username=root;password=password"); // needs connection string
-            IBugProvider bugProvider = new DatabaseBugProvider(bugDbContextFactory);
-            IBugCreator bugCreator = new DatabaseBugCreator(bugDbContextFactory);
-            _bugs = new BugList(bugProvider, bugCreator);
+            _bugs = new BugList(null, null);
             _navigationStore = new NavigationStore();
+            _loginViewModel = new LoginViewModel(new NavigationService(_navigationStore, CreateBugListViewModel));
         }
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -40,17 +40,17 @@ namespace Bugger
 
         private AddBugViewModel CreateAddBugViewModel()
         {
-            return new AddBugViewModel(_bugs, new NavigationService(_navigationStore, CreateBugListViewModel));
+            return new AddBugViewModel(_bugs, new NavigationService(_navigationStore, CreateBugListViewModel), _loginViewModel);
         }
 
         private BugListViewModel CreateBugListViewModel()
         {
-            return BugListViewModel.LoadViewModel(_bugs, new NavigationService(_navigationStore, CreateAddBugViewModel));
+            return BugListViewModel.LoadViewModel(_bugs, new NavigationService(_navigationStore, CreateAddBugViewModel), _loginViewModel);
         }
 
         private LoginViewModel CreateLoginViewModel()
         {
-            return new LoginViewModel(new NavigationService(_navigationStore, CreateBugListViewModel));
+            return _loginViewModel;
         }
     }
 }

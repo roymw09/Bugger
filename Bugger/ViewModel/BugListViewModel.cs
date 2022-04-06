@@ -1,6 +1,9 @@
 ﻿using Bugger.Command;
+using Bugger.DBContext;
 using Bugger.Model;
 using Bugger.Service;
+using Bugger.Service.BugCreator;
+using Bugger.Service.BugProvider;
 using Bugger.Store;
 using System;
 using System.Collections.Generic;
@@ -17,6 +20,15 @@ namespace Bugger.ViewModel
         public ICommand LoadBugCommand { get; }
         public ICommand CreateBugCommand { get; }
 
+        private string hostname;
+        private string database;
+        private string username;
+        private string password;
+
+        private BugDbContextFactory bugDbContextFactory;
+        private IBugProvider bugProvider;
+        private IBugCreator bugCreator;
+
         public BugListViewModel(BugList bugList, NavigationService addBugViewNavigationService)
         {
             _bugs = new ObservableCollection<BugViewModel>();
@@ -25,9 +37,27 @@ namespace Bugger.ViewModel
             CreateBugCommand = new NavigateCommand(addBugViewNavigationService);
         }
 
-        public static BugListViewModel LoadViewModel(BugList bugList, NavigationService addBugViewNavigationService)
+        public BugListViewModel(BugList bugList, NavigationService addBugViewNavigationService, LoginViewModel loginViewModel)
         {
-            BugListViewModel viewModel = new BugListViewModel(bugList, addBugViewNavigationService);
+            hostname = loginViewModel.HostName;
+            database = loginViewModel.DatabaseName;
+            username = loginViewModel.Username;
+            password = loginViewModel.Password;
+            bugDbContextFactory = new BugDbContextFactory("server="+hostname+
+                ";database="+database+";username="+username+";password="+password); // needs connection string
+            bugProvider = new DatabaseBugProvider(bugDbContextFactory);
+            bugCreator = new DatabaseBugCreator(bugDbContextFactory);
+            bugList = new BugList(bugProvider, bugCreator);
+
+            _bugs = new ObservableCollection<BugViewModel>();
+
+            LoadBugCommand = new LoadBugCommand(this, bugList);
+            CreateBugCommand = new NavigateCommand(addBugViewNavigationService);
+        }
+
+        public static BugListViewModel LoadViewModel(BugList bugList, NavigationService addBugViewNavigationService, LoginViewModel loginViewModel)
+        {
+            BugListViewModel viewModel = new BugListViewModel(bugList, addBugViewNavigationService, loginViewModel);
 
             viewModel.LoadBugCommand.Execute(null);
             return viewModel;
@@ -36,10 +66,13 @@ namespace Bugger.ViewModel
         public void UpdateBugList(IEnumerable<Bug> bugs)
         {
             _bugs.Clear();
-            foreach (Bug bug in bugs)
+            if (bugs != null)
             {
-                BugViewModel bugViewModel = new BugViewModel(bug);
-                _bugs.Add(bugViewModel);
+                foreach (Bug bug in bugs)
+                {
+                    BugViewModel bugViewModel = new BugViewModel(bug);
+                    _bugs.Add(bugViewModel);
+                }
             }
         }
     }

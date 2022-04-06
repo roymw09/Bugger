@@ -21,7 +21,11 @@ namespace Bugger.Model
 
         public async Task<IEnumerable<Bug>> GetBugList()
         {
-            return await _bugProvider.getAllBugs();
+            if (_bugProvider != null)
+            {
+                return await _bugProvider.getAllBugs();
+            }
+            return null;
         }
 
         public async Task AddBug(Bug bug)

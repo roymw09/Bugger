@@ -1,6 +1,9 @@
 ﻿using Bugger.Command;
+using Bugger.DBContext;
 using Bugger.Model;
 using Bugger.Service;
+using Bugger.Service.BugCreator;
+using Bugger.Service.BugProvider;
 using Bugger.Store;
 using System;
 using System.Windows.Input;
@@ -9,6 +12,15 @@ namespace Bugger.ViewModel
 {
     public class AddBugViewModel : ViewModelBase
     {
+        private string hostname;
+        private string database;
+        private string username;
+        private string password;
+
+        private BugDbContextFactory bugDbContextFactory;
+        private IBugProvider bugProvider;
+        private IBugCreator bugCreator;
+
         private readonly Bug _bug;
 
         public string BugID => _bug.BugID;
@@ -102,6 +114,22 @@ namespace Bugger.ViewModel
 
         public AddBugViewModel(BugList bugList, NavigationService bugListViewNavigationService)
         {
+            AddBugCommand = new AddBugCommand(this, bugList, bugListViewNavigationService);
+            CancelAddBugCommand = new NavigateCommand(bugListViewNavigationService);
+        }
+
+        public AddBugViewModel(BugList bugList, NavigationService bugListViewNavigationService, LoginViewModel loginViewModel)
+        {
+            hostname = loginViewModel.HostName;
+            database = loginViewModel.DatabaseName;
+            username = loginViewModel.Username;
+            password = loginViewModel.Password;
+            bugDbContextFactory = new BugDbContextFactory("server=" + hostname +
+                ";database=" + database + ";username=" + username + ";password=" + password); // needs connection string
+            bugProvider = new DatabaseBugProvider(bugDbContextFactory);
+            bugCreator = new DatabaseBugCreator(bugDbContextFactory);
+            bugList = new BugList(bugProvider, bugCreator);
+
             AddBugCommand = new AddBugCommand(this, bugList, bugListViewNavigationService);
             CancelAddBugCommand = new NavigateCommand(bugListViewNavigationService);
         }
